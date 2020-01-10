@@ -26,7 +26,7 @@ export default class Breakpoint extends React.Component {
         modifier = prop;
       } else if (prop === 'customQuery') {
         usesCustomQuery = true;
-      } else if (prop !== 'tagName' && prop !== 'className' && prop !== 'style') {
+      } else if (prop !== 'tagName' && prop !== 'className' && prop !== 'style' && prop !== 'onActivate') {
         breakpoint = prop;
       } 
     });
@@ -58,7 +58,7 @@ export default class Breakpoint extends React.Component {
       customQuery
     } = this.extractBreakpointAndModifierFromProps(rest);
 
-    const { currentBreakpointName, currentWidth } = this.context;
+    const { currentBreakpointName, currentWidth, lastBreakpointName, lastWidth } = this.context;
 
     const shouldRender = BreakpointUtil.shouldRender({
       breakpointName: breakpoint,
@@ -67,6 +67,10 @@ export default class Breakpoint extends React.Component {
       currentWidth,
       customQuery
     });
+
+    if (lastBreakpointName !== currentBreakpointName && shouldRender) {
+      this.props.onActivate && this.props.onActivate();
+    }
 
     if (!shouldRender) return null;
 

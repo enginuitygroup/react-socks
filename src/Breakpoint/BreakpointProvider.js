@@ -6,7 +6,9 @@ import debounce from 'lodash.debounce';
 
 const BreakpointContext = React.createContext({
   currentWidth: 9999,
-  currentBreakpointName: ''
+  currentBreakpointName: '',
+  lastWidth: 9999,
+  lastBreakpointName: ''
 });
 
 export default class BreakpointProvider extends React.Component {
@@ -16,7 +18,9 @@ export default class BreakpointProvider extends React.Component {
 
     this.state = {
       currentWidth: currentWidth,
-      currentBreakpointName: BreakpointUtil.getBreakpointName(currentWidth)
+      currentBreakpointName: BreakpointUtil.getBreakpointName(currentWidth),
+      lastWidth: currentWidth,
+      lastBreakpointName: BreakpointUtil.getBreakpointName(currentWidth)
     };
 
     this.handleResize = debounce(this.handleResize.bind(this), 100);
@@ -32,23 +36,29 @@ export default class BreakpointProvider extends React.Component {
   }
 
   handleResize() {
+    const lastWidth = this.state.currentWidth;
+    const lastBreakpointName = this.state.currentBreakpointName;
     const currentWidth = BreakpointUtil.currentWidth;
 
     this.setState({
       currentWidth: currentWidth,
-      currentBreakpointName: BreakpointUtil.getBreakpointName(currentWidth)
+      currentBreakpointName: BreakpointUtil.getBreakpointName(currentWidth),
+      lastWidth,
+      lastBreakpointName
     });
   }
 
   render() {
     const { children } = this.props;
-    const { currentWidth, currentBreakpointName } = this.state;
+    const { currentWidth, currentBreakpointName, lastWidth, lastBreakpointName } = this.state;
 
     return (
       <BreakpointContext.Provider
         value={{
           currentWidth,
           currentBreakpointName,
+          lastWidth,
+          lastBreakpointName
         }}
       >
         { children }
