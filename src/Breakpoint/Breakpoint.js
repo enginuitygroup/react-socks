@@ -58,7 +58,7 @@ export default class Breakpoint extends React.Component {
       customQuery
     } = this.extractBreakpointAndModifierFromProps(rest);
 
-    const { currentBreakpointName, currentWidth, lastBreakpointName, lastWidth } = this.context;
+    const { currentBreakpointName, currentWidth, lastBreakpointName } = this.context;
 
     const shouldRender = BreakpointUtil.shouldRender({
       breakpointName: breakpoint,
@@ -94,5 +94,6 @@ Breakpoint.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ])),
-  customQuery: PropTypes.string
+  customQuery: PropTypes.string,
+  onActivate: PropTypes.func
 };

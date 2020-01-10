@@ -33,6 +33,8 @@ describe('Breakpoint - large', () => {
     expect(wrapper.prop('value')).toEqual({
       currentWidth: 1024,
       currentBreakpointName: 'large',
+      lastWidth: 1024,
+      lastBreakpointName: 'large'
     });
   });
 
@@ -44,6 +46,8 @@ describe('Breakpoint - large', () => {
     expect(wrapper.state()).toEqual({
       currentWidth: 1024,
       currentBreakpointName: 'large',
+      lastWidth: 1024,
+      lastBreakpointName: 'large'
     });
 
     currBPointNameStub.restore();
@@ -54,6 +58,8 @@ describe('Breakpoint - large', () => {
     expect(wrapper.state()).toEqual({
       currentWidth: 1024,
       currentBreakpointName: 'small',
+      lastWidth: 1024,
+      lastBreakpointName: 'large',
     });
   });
 
